@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className='container flex flex-col items-center justify-center min-h-screen gap-10 mx-auto bg-emerald-300 xl:flex-row'>
+    <div className='flex flex-col items-center justify-center min-h-screen gap-10 bg-emerald-300 xl:flex-row'>
       <Image
         src='https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
         alt='Books'
