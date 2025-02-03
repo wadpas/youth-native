@@ -1,3 +1,6 @@
+'use client'
+import { deleteBook } from '@/actions/actions'
+
 type BooksListProps = {
   books: {
     id: number
@@ -59,8 +62,14 @@ export default function BookList({ books }: BooksListProps) {
             <span className='text-gray-600'>{book.year}</span>
           </div>
           <div>
-            <span className='text-gray-800'>{book.price.toString()}</span>
-            <button className='px-3 py-1 ml-5 text-white bg-red-500 rounded hover:bg-red-600'>X</button>
+            <span className='text-gray-800'>${book.price.toString()}</span>
+            <button
+              onClick={async () => {
+                await deleteBook(book.id)
+              }}
+              className='px-3 py-1 ml-5 text-white bg-red-500 rounded hover:bg-red-600'>
+              X
+            </button>
           </div>
         </li>
       ))}
