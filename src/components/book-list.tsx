@@ -1,5 +1,15 @@
-export default function BookList() {
-  const books = [
+type BooksListProps = {
+  books: {
+    id: number
+    title: string
+    author: string
+    year: number
+    price: number
+  }[]
+}
+
+export default function BookList({ books }: BooksListProps) {
+  const books2 = [
     {
       id: 1,
       title: 'The Great Gatsby',
@@ -35,41 +45,6 @@ export default function BookList() {
       year: 1954,
       price: 14.99,
     },
-    {
-      id: 6,
-      title: 'Pride and Prejudice',
-      author: 'Jane Austen',
-      year: 1813,
-      price: 8.99,
-    },
-    {
-      id: 7,
-      title: 'The Hobbit',
-      author: 'J.R.R. Tolkien',
-      year: 1937,
-      price: 13.99,
-    },
-    {
-      id: 8,
-      title: 'The Da Vinci Code',
-      author: 'Dan Brown',
-      year: 2003,
-      price: 15.99,
-    },
-    {
-      id: 9,
-      title: 'The Hunger Games',
-      author: 'Suzanne Collins',
-      year: 2008,
-      price: 10.99,
-    },
-    {
-      id: 10,
-      title: 'The Shining',
-      author: 'Stephen King',
-      year: 1977,
-      price: 12.99,
-    },
   ]
 
   return (
@@ -84,7 +59,7 @@ export default function BookList() {
             <span className='text-gray-600'>{book.year}</span>
           </div>
           <div>
-            <span className='text-gray-800'>{book.price}</span>
+            <span className='text-gray-800'>{book.price.toString()}</span>
             <button className='px-3 py-1 ml-5 text-white bg-red-500 rounded hover:bg-red-600'>X</button>
           </div>
         </li>
