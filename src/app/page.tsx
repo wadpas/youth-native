@@ -1,3 +1,4 @@
+import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server'
 import Image from 'next/image'
 
 export default function Home() {
@@ -15,6 +16,10 @@ export default function Home() {
         <p className='max-w-2xl text-2xl font-medium'>
           The modern book industry has seen several major changes due to new technologies
         </p>
+        <div className='mt-10 space-x-3'>
+          <LoginLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Login</LoginLink>
+          <RegisterLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Register</RegisterLink>
+        </div>
       </div>
     </div>
   )

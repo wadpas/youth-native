@@ -1,5 +1,6 @@
 'use client'
 
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -19,7 +20,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <header className='flex items-center justify-between mb-10 shadow '>
+    <header className='flex items-center mb-10 shadow '>
       <Link
         href='/dashboard'
         className='flex flex-row items-center'>
@@ -32,7 +33,7 @@ export default function Navbar() {
         />
         <h1 className='text-2xl font-bold'>Byte</h1>
       </Link>
-      <nav>
+      <nav className='ml-auto'>
         <ul className='flex gap-2'>
           {routes.map((route) => (
             <li
@@ -45,6 +46,7 @@ export default function Navbar() {
           ))}
         </ul>
       </nav>
+      <LogoutLink className='mx-3'>Logout</LogoutLink>
     </header>
   )
 }
