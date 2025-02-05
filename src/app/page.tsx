@@ -1,7 +1,11 @@
-import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server'
+import PurchaseBtn from '@/components/purchase-btn'
+import { getKindeServerSession, LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server'
 import Image from 'next/image'
 
-export default function Home() {
+export default async function Home() {
+  const { getUser, isAuthenticated } = getKindeServerSession()
+  const isLoggedIn = await isAuthenticated()
+
   return (
     <div className='flex flex-col items-center justify-center min-h-screen gap-10 bg-emerald-300 xl:flex-row'>
       <Image
@@ -17,8 +21,14 @@ export default function Home() {
           The modern book industry has seen several major changes due to new technologies
         </p>
         <div className='mt-10 space-x-3'>
-          <LoginLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Login</LoginLink>
-          <RegisterLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Register</RegisterLink>
+          {!isLoggedIn ? (
+            <>
+              <LoginLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Login</LoginLink>
+              <RegisterLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Register</RegisterLink>
+            </>
+          ) : (
+            <PurchaseBtn />
+          )}
         </div>
       </div>
     </div>

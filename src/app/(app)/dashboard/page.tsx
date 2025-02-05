@@ -15,6 +15,16 @@ export default async function Dashboard() {
     },
   })
 
+  const membership = await prisma.membership.findFirst({
+    where: {
+      userId: user.id,
+    },
+  })
+
+  if (!membership || membership.status !== 'active') {
+    return redirect('/')
+  }
+
   return (
     <div className=''>
       <h1 className='text-3xl font-bold text-center text-white '>Dashboard</h1>

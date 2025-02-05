@@ -19,3 +19,11 @@ model Book {
   creatorId String
   createdAt DateTime @default(now())
 }
+
+model Membership {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  status    String
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
