@@ -1,11 +1,7 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { redirect } from 'next/navigation'
+import { checkAuthenticationAndMembership } from '@/lib/server-utils'
 
 export default async function Home() {
-  const { isAuthenticated, getUser } = getKindeServerSession()
-  if (!(await isAuthenticated())) return redirect('/api/auth/login')
-
-  const user = await getUser()
+  const user = await checkAuthenticationAndMembership()
 
   return (
     <div className='text-center'>

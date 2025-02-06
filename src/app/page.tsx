@@ -1,10 +1,23 @@
 import PurchaseBtn from '@/components/purchase-btn'
+import { prisma } from '@/lib/db'
 import { getKindeServerSession, LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function Home() {
   const { getUser, isAuthenticated } = getKindeServerSession()
   const isLoggedIn = await isAuthenticated()
+
+  let isPayingMember = false
+  const membership = await prisma.membership.findFirst({
+    where: {
+      userId: (await getUser())?.id,
+      status: 'active',
+    },
+  })
+  if (membership) {
+    isPayingMember = true
+  }
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen gap-10 bg-emerald-300 xl:flex-row'>
@@ -26,8 +39,14 @@ export default async function Home() {
               <LoginLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Login</LoginLink>
               <RegisterLink className='px-4 py-2 font-medium text-white bg-black rounded-lg'>Register</RegisterLink>
             </>
-          ) : (
+          ) : !isPayingMember ? (
             <PurchaseBtn />
+          ) : (
+            <Link
+              href='/dashboard'
+              className='px-4 py-2 font-medium text-white bg-black rounded-lg'>
+              To Dashboard
+            </Link>
           )}
         </div>
       </div>

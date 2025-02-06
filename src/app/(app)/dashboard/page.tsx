@@ -1,29 +1,25 @@
 import BookForm from '@/components/book-form'
 import BookList from '@/components/book-list'
 import { prisma } from '@/lib/db'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { checkAuthenticationAndMembership } from '@/lib/server-utils'
 import { redirect } from 'next/navigation'
 
-export default async function Dashboard() {
-  const { getUser, isAuthenticated } = getKindeServerSession()
-  if (!(await isAuthenticated())) return redirect('/api/auth/login')
-  const user = await getUser()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const paymentValueFromUrl = (await searchParams).payment
+  const user = await checkAuthenticationAndMembership(paymentValueFromUrl === 'success' ? 5000 : 0)
+  if (paymentValueFromUrl === 'success') {
+    return redirect('/app/dashboard')
+  }
 
   const books = await prisma.book.findMany({
     where: {
       creatorId: user.id,
     },
   })
-
-  const membership = await prisma.membership.findFirst({
-    where: {
-      userId: user.id,
-    },
-  })
-
-  if (!membership || membership.status !== 'active') {
-    return redirect('/')
-  }
 
   return (
     <div className=''>
