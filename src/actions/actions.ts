@@ -1,7 +1,6 @@
 'use server'
 import { prisma } from '@/lib/db'
 import { checkAuthenticationAndMembership } from '@/lib/server-utils'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import Stripe from 'stripe'
@@ -26,7 +25,7 @@ export async function addBook(formData: FormData) {
 }
 
 export async function deleteBook(id: number) {
-  const user = await checkAuthenticationAndMembership()
+  await checkAuthenticationAndMembership()
 
   await prisma.book.delete({
     where: {
